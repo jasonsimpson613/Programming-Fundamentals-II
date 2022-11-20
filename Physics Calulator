@@ -1,0 +1,186 @@
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <iomanip>
+#include <cmath>
+#include <sstream>
+#include "Input_Validation_Extended.h"
+
+
+using namespace std;
+
+
+ string userInput = "";
+
+int main() {
+//code to derive formula for velocity
+ 
+ 
+ double ds = 0.0;
+ string dsUnits = "m";
+ double dt = 0.0;
+ string dtUnits = "s";
+do {
+  cout << "Solving for v = ds/dt:" << endl;
+  cout << "Enter a value for displacement: " << endl;
+  ds = validateDouble(ds);
+
+  
+  cout << "Enter a value for time: " << endl;
+  dt = validateDouble(dt);
+  double vResult = ds / dt;
+  string vUnits = "m/s";
+  cout << "You entered " << ds << " for " << dsUnits << " and " << dt << " for " << dtUnits << ". " << endl;
+  cout << "Your calculated velocity is " << vResult << " " << vUnits << endl;
+  cout << "" << endl;
+  
+  double dv = 0.0;
+
+  cout << "Solving for a = dv/dt:" << endl;
+  cout << "Enter a value for velocity: " << endl;
+  dv = validateDouble(dv);
+
+  cout << "Enter a value for time: " << endl;
+  dt = validateDouble(dt);
+
+  double aResult = dv / dt;
+  string aUnits = "m/s^2";
+  
+  cout << "You entered " << dv << " for " << vUnits << " and " << dt << " for " << dtUnits << ". " << endl;
+  cout << "Your calculated acceleration is " << aResult << " " << aUnits << endl;
+  cout << "" << endl;
+  
+  int userOption;
+  double s0 = 0.0;
+  string s0Units = "m";
+  double a = 0.0;
+  double v0 = 0.0;
+  string v0Units = "m/s";
+  double vSquared = 0.0;
+  string vSquaredUnits = "m/s";
+  double dtSquared = dt * dt;
+  double v = 0.0;
+  double v0New = 0.0;
+  do{
+  cout << "Solving for various motion equations:" << endl; 
+  cout << "Select an integer from 1-4: " << endl;
+  cin >> userOption;
+  if(userOption == 1)
+  {
+    cout << "Solving motion equation v = v0 + at:" << endl;
+    cout << "Enter a value for initial velocity: " << endl; 
+    v0 = validateDouble(v0);
+    cout << "Enter a value for acceleration: " << endl;
+    a = validateDouble(a);
+    cout << "Enter a value for time: " << endl;
+    dt = validateDouble(dt);
+    double vCalculated = v0 + a * dt;
+    cout << "You entered values of " << v0 << " " << v0Units << " for initial velocity, " << a << " " << aUnits << " for acceleration, and " << dt << " " << dtUnits << " for time." << endl;
+    cout << "Your calculated motion is a velocity of " << vCalculated << vUnits << endl;
+  }
+ if(userOption == 2)
+ {
+   cout << "Solving for motion equation s = s0 + v0t + at^2:" << endl;
+   cout << "Enter a value for initial position: " << endl;
+   s0 = validateDouble(s0);
+   cout << "Enter a value for initial velocity: " << endl;
+   v0 = validateDouble(v0);
+   cout << "Enter a value for time elapsed: " << endl;
+   dt = validateDouble(dt);
+   cout << "Enter a value for acceleration: " << endl;
+   a = validateDouble(a);
+   double sCalculated = s0 + (v0 * dt) + (a * dtSquared);
+   string sCalculatedUnits = "m";
+   cout << "You entered values of " << s0 << " " << s0Units << " for initial postion, " << v0 << " " << v0Units << " for initial velocity, " << dt << dtUnits << " for elapsed time, and " << a << " " << aUnits << " for acceleration." << endl;
+   cout << "Your calculated t^2 value is " << dtSquared << "s^2" << endl;
+   cout << "Your calculated motion is a displacement of " <<
+sCalculated << " " << sCalculatedUnits << endl; 
+}
+if(userOption == 3)
+{  cout << "Solving for motion equation v^2 = v0^2 + 2a(s - s0):" << endl;
+  cout << "Enter a value for initial velocity: " << endl;
+  v0 = validateDouble(v0);
+  cout << "Enter a value for acceleration: " << endl;
+  a = validateDouble(a);
+  cout << "Enter a value for displacement: " << endl;
+  ds = validateDouble(ds);
+  cout << "Enter a value for initial position: " << endl;
+  s0 = validateDouble(s0);
+
+  double v0Squared = v0 * v0;
+  double aTimesTwo = a * 2;
+  double sFactor = ds - s0;
+  double vSquared = v0Squared + aTimesTwo * sFactor; 
+  cout << "You entered values of " << v0 << " " << v0Units << " for initial velocity, " << a << " " << aUnits << " for acceleration, " << ds << " " << dsUnits << " for displacement, and " << s0 << " " << s0Units << " for initial postion." << endl;
+  cout << "Your calculated value for v0^2 is " << v0Squared << " " << v0Units << endl;
+  cout << "Your calculated value for 2a is " << aTimesTwo << " " << aUnits << endl;
+  cout << "Your calculated value for (s - s0) is " << sFactor << " " << dsUnits << endl;
+  cout << "Your calculated motion is a v^2 value of " << vSquared << " " << vSquaredUnits << endl;
+  }
+if(userOption == 4)
+{
+  cout << "Solving for motion equation v- = 1/2(v + v0):" << endl;
+    
+    string vBarUnits = "m/s";
+  cout << "Enter a value for velocity: " << endl;
+  v = validateDouble(v);
+  cout << "Enter a value for initial velocity: " << endl;
+  v0New = validateDouble(v0New);
+
+  cout << "You entered a value of " << v << " " << vUnits << " for velocity and " << v0New << " " << v0Units << " for initial velocity." << endl;
+  cout << "Your calculated motion is an average velocity value of " << (v + v0New) / 2 << " " << vBarUnits << endl;
+}
+    if (userOption >= 5)
+      {
+      cout << "Invalid input, please try again:" << endl;
+      }
+    }
+  while (userOption >= 5);
+    
+double f = 0.0;
+string fUnits = "N";
+double m = 0.0;
+string mUnits = "kg";
+  
+  cout << "Solving for Newton's 2nd Law, sum of F = ma" << endl;
+  cout << "Enter a value for mass: " << endl;
+  m = validateDouble(m);
+
+  cout << "Enter a value for acceleration: " << endl;
+  a = validateDouble(a);
+  f = (m * a);
+  cout << "You entered a value of " << m << " " << mUnits << " for mass and " << a << " " << aUnits << "for acceleration." << endl;
+  cout << "Your calculated value for sum of forces is " << f << " " << fUnits << endl;
+  cout << "Solving for weight on Earth, W = mg: " << endl;
+
+  string wUnits = "N";
+  double g = 0.0;
+  string gUnits = "";
+  cout << "Enter a value for mass: " << endl;
+  m = validateDouble(m);
+
+  g = 9.8;
+  
+  double w = m * g;
+  
+  cout << "You entered a value of " << m << " " << mUnits << " for mass. Gravity is a constant with a value of " << g << " " << gUnits << "." << endl;
+  cout << "Your calculated value for weight on Earth is " << w << " " << wUnits << "." << endl;
+
+  cout << "Solving for momentum, p = mv" << endl;
+  double p = 0.0;
+  string pUnits = "kg * m/s";
+
+  cout << "Enter a value for mass: " << endl;
+  m = validateDouble(m);
+
+  cout << "Enter a value for velocity: " << endl;
+  v = validateDouble(v);
+
+  p = m * v;
+  cout << "You entered a value of " << m << " " << mUnits << " for mass and " << v << " " << vUnits << " for veloctiy." << endl;
+  cout << "Your calculated value for momentum is " << p << " " << pUnits << " ." << endl;
+  cout << "Press any key to repeat calculations. Press e to exit program:" << endl; 
+  userInput = validateString(userInput);
+  }
+  while (userInput != "e");
+  }
